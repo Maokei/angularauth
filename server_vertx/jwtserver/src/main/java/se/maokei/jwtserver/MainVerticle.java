@@ -2,8 +2,29 @@ package se.maokei.jwtserver;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
+import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
+import io.vertx.config.ConfigRetriever;
+import io.vertx.core.json.JsonObject;
 
 public class MainVerticle extends AbstractVerticle {
+
+  public static void main(String[] args){
+    VertxOptions vertxOptions = new VertxOptions();
+    vertxOptions.setClustered(true);
+
+    Vertx.clusteredVertx(vertxOptions, res -> {
+      if(res.succeeded()) {
+        Vertx vertx  = res.result();
+        ConfigRetriever cr = ConfigRetriever.create(vertx);
+        cr.getConfig(config -> {
+          if(config.succeeded()) {
+            JsonObject json = config.result();
+          }
+        });
+      }
+    });
+  }
 
   @Override
   public void start(Future<Void> startFuture) throws Exception {
