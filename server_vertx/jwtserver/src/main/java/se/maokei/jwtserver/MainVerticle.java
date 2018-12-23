@@ -6,8 +6,14 @@ import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 
+/*
+* @class MainVerticle
+* */
 public class MainVerticle extends AbstractVerticle {
+  private static final Logger LOGGER = LoggerFactory.getLogger(MainVerticle.class);
 
   public static void main(String[] args){
     VertxOptions vertxOptions = new VertxOptions();
