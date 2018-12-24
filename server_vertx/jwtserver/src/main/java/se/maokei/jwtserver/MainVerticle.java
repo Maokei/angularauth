@@ -9,7 +9,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 
-/*
+/**S
 * @class MainVerticle
 * */
 public class MainVerticle extends AbstractVerticle {
