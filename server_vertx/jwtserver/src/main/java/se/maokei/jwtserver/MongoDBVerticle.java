@@ -9,11 +9,11 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.mongo.MongoClient;
+import se.maokei.jwtserver.database.MongoManager;
 
 public class MongoDBVerticle extends AbstractVerticle {
   private static final Logger LOGGER = LoggerFactory.getLogger(MongoDBVerticle.class);
   private static MongoClient mongoClient = null;
-
 
 
   public static void main(String[] args) {
@@ -42,8 +42,17 @@ public class MongoDBVerticle extends AbstractVerticle {
   @Override
   public void start() {
     LOGGER.info("Starting MongoDB verticle");
-    JsonObject dbconfig = new JsonObject();
-    System.out.println("");
+    JsonObject dbConfig = new JsonObject();
+    System.out.println("Mongo host: " + config().getString("mongodb.host"));
+    //mongodb://localhost:27017/mongoTest
+    dbConfig.put("connection_string", "mongodb://" + config().getString("mongodb.host") + ":" + config().getInteger("mongodb.port") + "/" + config().getString("mongodb_databasename"));
+    //dbConfig.put("username", config().getString("mongodb_username"));
+    //dbConfig.put("password", config().getString("mongodb_password"));
+    //dbConfig.put("authSource", config().getString("mongodb_authSource"));
+    dbConfig.put("useObjectId", true); //object is will be mapped to string
+    mongoClient = MongoClient.createShared(vertx, dbConfig);
+    MongoManager mongoManager = new MongoManager(mongoClient);
+    mongoManager.registerConsumer(vertx);
 
 
   }

@@ -19,11 +19,21 @@ public class MongoManager {
   }
 
   public void createCollection() {
+    this.mongoClient.createCollection("eventsdb", res -> {
+      if(res.succeeded()) {
+        //created
+      }else{
+        res.cause().printStackTrace();
+      }
+    });
+  }
+
+  public void findUser(JsonObject user) {
 
   }
 
-  void registerConsumer(Vertx vertx) {
-    vertx.eventBus().consumer("", message -> {
+  public void registerConsumer(Vertx vertx) {
+    vertx.eventBus().consumer("se.maokei.mongoservice", message -> {
       JsonObject jo = new JsonObject(message.body().toString());
       switch(jo.getString("cmd")) {
         case "findAll":
@@ -31,6 +41,9 @@ public class MongoManager {
           break;
         case "createCollection":
           createCollection();
+          break;
+        case "findUser":
+          findUser(jo);
           break;
         default:
           LOGGER.info("No such command in mongo manager: ");

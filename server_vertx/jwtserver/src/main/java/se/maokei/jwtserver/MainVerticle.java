@@ -1,17 +1,17 @@
 package se.maokei.jwtserver;
 
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Future;
-import io.vertx.core.Vertx;
-import io.vertx.core.VertxOptions;
+import io.vertx.core.*;
 import io.vertx.config.ConfigRetriever;
+import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.StaticHandler;
 
-/**S
-* @class MainVerticle
-* */
+/**
+ * MainVerticle
+ * */
 public class MainVerticle extends AbstractVerticle {
   private static final Logger LOGGER = LoggerFactory.getLogger(MainVerticle.class);
 
@@ -25,7 +25,9 @@ public class MainVerticle extends AbstractVerticle {
         ConfigRetriever cr = ConfigRetriever.create(vertx);
         cr.getConfig(config -> {
           if(config.succeeded()) {
-            JsonObject json = config.result();
+            JsonObject conf = config.result();
+            DeploymentOptions options = new DeploymentOptions().setConfig(conf);
+            vertx.deployVerticle(new MainVerticle(), options);
           }
         });
       }
@@ -34,18 +36,33 @@ public class MainVerticle extends AbstractVerticle {
 
   @Override
   public void start(Future<Void> startFuture) throws Exception {
-    vertx.createHttpServer().requestHandler(req -> {
-      req.response()
-        .putHeader("content-type", "text/plain")
-        .end("Hello from Vert.x!");
-    }).listen(8080, http -> {
-      if (http.succeeded()) {
-        startFuture.complete();
-        System.out.println("HTTP server started on http://localhost:8080");
-      } else {
-        startFuture.fail(http.cause());
-      }
+    Router router = Router.router(vertx);
+    Api api = new Api(vertx);
+    router.mountSubRouter("/api/", api.getApiSubrouter());
+
+    router.route().handler(StaticHandler.create().setCachingEnabled(false));
+    vertx.createHttpServer(new HttpServerOptions().setCompressionSupported(true))
+      .requestHandler(router).listen(config().getInteger("http.port"), asyncResult -> {
+        if(asyncResult.succeeded()) {
+          LOGGER.info("Http server is running on port: " + config().getInteger("http.port"));
+        }else{
+          LOGGER.error("Could not start http server", asyncResult.cause());
+        }
     });
   }
 
+  /**
+   * Replaces token in string with new value.
+   * @param input Incoming string to be modified.
+   * @param token Token value.
+   * @param newValue Replacement string value.
+   * @return Augmented string.
+   * */
+  public String replaceString(String input, String token, String newValue) {
+    String output = input;
+    while(output.indexOf(token) != -1) {
+      output = output.replace(token, newValue);
+    }
+    return output;
+  }
 }
