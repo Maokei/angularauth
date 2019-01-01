@@ -1,0 +1,12 @@
+{
+  "http.port": 8080,
+  "mongodb.port": 27017,
+  "mongodb.host": "localhost",
+  "mongodb.username": "admin",
+  "mongodb.password": "password",
+  "mongodb.dbname": "eventsdb",
+  "publicKey":"",
+  "secretKey":"",
+  "cryptoAlgorithm":"RS256",
+  "expirationTime":""
+}

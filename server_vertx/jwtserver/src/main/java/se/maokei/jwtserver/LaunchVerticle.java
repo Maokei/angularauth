@@ -44,6 +44,7 @@ public class LaunchVerticle extends AbstractVerticle {
     cr.getConfig(config -> {
       if (config.succeeded()) {
         JsonObject conf = config.result();
+        System.out.println("Starting server with configuration: \n" + conf.encodePrettily());
         DeploymentOptions options = new DeploymentOptions().setConfig(conf);
         vertx.deployVerticle(name, options, result -> {
           if (result.failed()) {

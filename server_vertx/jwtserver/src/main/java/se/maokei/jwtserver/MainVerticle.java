@@ -38,7 +38,7 @@ public class MainVerticle extends AbstractVerticle {
   public void start(Future<Void> startFuture) throws Exception {
     Router router = Router.router(vertx);
     Api api = new Api(vertx);
-    router.mountSubRouter("/api/", api.getApiSubrouter());
+    router.mountSubRouter("/api/", api.getApiSubrouter(vertx));
 
     router.route().handler(StaticHandler.create().setCachingEnabled(false));
     vertx.createHttpServer(new HttpServerOptions().setCompressionSupported(true))
