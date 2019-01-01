@@ -37,8 +37,6 @@ public class Api {
         .setSecretKey("kitty")
       )
     );
-    String token = jwt.generateToken(new JsonObject());
-    System.out.println("Toss me into postman: " + token);
   }
 
   public void defaultRoute(RoutingContext rc) {
