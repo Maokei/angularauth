@@ -2,6 +2,7 @@
 *.iml
 .directory
 .editorconfig
+.vertx/
 .mvn/
 mwnw
 mwnw.cmd
