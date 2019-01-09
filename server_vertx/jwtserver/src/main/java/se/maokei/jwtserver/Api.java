@@ -159,7 +159,7 @@ public class Api {
         System.out.println(jo.encodePrettily() + "\n");
       }
     });
-    System.out.println("subject: " + rc.user().principal().getValue("subject"));
+    LOGGER.info("subject accessed special resource: " + rc.user().principal().getValue("subject"));
     final String data = "{\n" +
       "            \"_id\": \"1\",\n" +
       "            \"name\": \"Auto export\",\n" +
