@@ -153,6 +153,13 @@ public class Api {
   }
 
   public void getSpecial(RoutingContext rc) {
+    JsonObject jo = new JsonObject();
+    jwt.authenticate(jo.put("JWT", "BASE64-ENCODED-STRING"), res-> {
+      if(res.succeeded()) {
+        System.out.println(jo.encodePrettily() + "\n");
+      }
+    });
+    System.out.println("subject: " + rc.user().principal().getValue("subject"));
     final String data = "{\n" +
       "            \"_id\": \"1\",\n" +
       "            \"name\": \"Auto export\",\n" +
