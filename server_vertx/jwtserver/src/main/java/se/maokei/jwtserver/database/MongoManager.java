@@ -39,9 +39,11 @@ public class MongoManager {
     JsonObject user = data.getJsonObject("user");
     JsonObject query = new JsonObject();
     query.put("email", user.getValue("email"));
+    System.out.println(data.toString());
     this.mongoClient.findOne("users", query, new JsonObject(), res -> {
       if(res.succeeded()) {
         if(res != null) {
+          //TODO null pointer when user isn't found
           JsonObject jo = new JsonObject(res.result().toString());
           message.reply(jo);
         }else{

@@ -2,7 +2,9 @@ package se.maokei.jwtserver;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpHeaders;
+import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -13,9 +15,12 @@ import io.vertx.ext.jwt.JWTOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
 import io.vertx.ext.web.handler.impl.JWTAuthHandlerImpl;
 import se.maokei.jwtserver.entity.User;
+
+import java.util.HashSet;
 
 
 /**
@@ -46,29 +51,12 @@ public class Api {
       .end(Json.encodePrettily(jo));
   }
 
-  public void verifyToken(RoutingContext rc) {
-    if(rc.request().headers().get("authToken").isEmpty()) {
-      rc.response().setStatusCode(401).end("unauthorized request");
-      /*JWTAuthHandlerImpl handler = (JWTAuthHandlerImpl) JWTAuthHandler.create(jwt);
-      handler.parseCredentials(rc, handle -> {
-
-      });*/
-      return;
-    }
-    final String token = rc.request().headers().get("authToken");
-    if(token == null) {
-      rc.response().setStatusCode(401).end("unauthorized request");
-      return;
-    }
-
-    rc.next();
-  }
-
   public void loginRoute(RoutingContext rc) {
     JsonObject userData = rc.getBodyAsJson();
     JsonObject cmd = new JsonObject();
     cmd.put("cmd", "findUserByEmail");
     cmd.put("user", userData);
+    System.out.println(userData.toString());
     vertx.eventBus().send("se.maokei.mongoservice", cmd.toString(), reply -> {
       if(reply.succeeded()) {
         JsonObject user = new JsonObject(reply.result().body().toString());
@@ -110,7 +98,7 @@ public class Api {
   }
 
   public void getEvents(RoutingContext rc) {
-    final String data = "{\n" +
+    final String data = "[{\n" +
       "            \"_id\": \"1\",\n" +
       "            \"name\": \"Auto export\",\n" +
       "            \"description\": \"\",\n" +
@@ -145,10 +133,9 @@ public class Api {
       "            \"name\": \"Clean the house\",\n" +
       "            \"description\": \"Clean the house before the relative arrive!\",\n" +
       "            \"date\": \"2018-01-01\"\n" +
-      "        }";
-    JsonObject events = new JsonObject(data);
+      "        }]";
+    JsonArray events = new JsonArray(data);
     rc.response().setStatusCode(200)
-      .putHeader("content-type", "application/json")
       .end(Json.encodePrettily(events));
   }
 
@@ -160,7 +147,7 @@ public class Api {
       }
     });
     LOGGER.info("subject accessed special resource: " + rc.user().principal().getValue("subject"));
-    final String data = "{\n" +
+    final String data = "[{\n" +
       "            \"_id\": \"1\",\n" +
       "            \"name\": \"Auto export\",\n" +
       "            \"description\": \"\",\n" +
@@ -195,8 +182,8 @@ public class Api {
       "            \"name\": \"Clean the house\",\n" +
       "            \"description\": \"Clean the house before the relative arrive!\",\n" +
       "            \"date\": \"2018-01-01\"\n" +
-      "        }";
-    JsonObject events = new JsonObject(data);
+      "        }]";
+    JsonArray events = new JsonArray(data);
     rc.response().setStatusCode(200)
       .putHeader("content-type", "appplication/json")
       .end(Json.encodePrettily(events));
