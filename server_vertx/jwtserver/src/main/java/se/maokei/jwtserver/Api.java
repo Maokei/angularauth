@@ -56,15 +56,18 @@ public class Api {
     JsonObject cmd = new JsonObject();
     cmd.put("cmd", "findUserByEmail");
     cmd.put("user", userData);
-    System.out.println(userData.toString());
     vertx.eventBus().send("se.maokei.mongoservice", cmd.toString(), reply -> {
       if(reply.succeeded()) {
         JsonObject user = new JsonObject(reply.result().body().toString());
-        if(!user.getString("password").equals(userData.getString("password"))) {
-          rc.response().setStatusCode(401).end("!Invalid password");
-        }else {
-          String token = jwt.generateToken(new JsonObject().put("subject", user.getString("_id")), new JWTOptions());
-          rc.response().setStatusCode(200).end(new JsonObject().put("token", token).toString());
+        if(user.fieldNames().contains("password") && user.fieldNames().contains("email")) {
+          if(!user.getString("password").equals(userData.getString("password"))) {
+            rc.response().setStatusCode(401).end("Email or password wrong");
+          }else {
+            String token = jwt.generateToken(new JsonObject().put("subject", user.getString("_id")), new JWTOptions());
+            rc.response().setStatusCode(200).end(new JsonObject().put("token", token).toString());
+          }
+        }else{
+          rc.response().setStatusCode(200).end(user.getString("error").toString());
         }
       }else{
         rc.response().setStatusCode(401).end("login bad");

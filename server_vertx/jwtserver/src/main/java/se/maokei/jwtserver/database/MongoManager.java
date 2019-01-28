@@ -8,6 +8,8 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.mongo.MongoClient;
 
+import java.util.Optional;
+
 /**
  *
  * Create database eventsdb
@@ -39,19 +41,17 @@ public class MongoManager {
     JsonObject user = data.getJsonObject("user");
     JsonObject query = new JsonObject();
     query.put("email", user.getValue("email"));
-    System.out.println(data.toString());
     this.mongoClient.findOne("users", query, new JsonObject(), res -> {
       if(res.succeeded()) {
-        if(res != null) {
-          //TODO null pointer when user isn't found
-          JsonObject jo = new JsonObject(res.result().toString());
-          message.reply(jo);
+        Optional<JsonObject> opt = Optional.ofNullable(res.result());
+        if(opt.isPresent()) {
+          message.reply(opt.get());
         }else{
-          message.reply(new JsonObject().put("error", "Invalid email"));
+          message.reply(new JsonObject().put("error", "No user with email: " + user.getValue("email")));
         }
       }else{
         message.reply(new JsonObject().put("error", "Internal error"));
-        LOGGER.error("Error findUserByEmail");
+        LOGGER.error("Error findUserByEmail looking up: " + user.getValue("email"));
       }
     });
   }
