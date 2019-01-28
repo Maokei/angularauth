@@ -1,8 +1,6 @@
 package se.maokei.jwtserver;
 
 import io.vertx.core.Vertx;
-import io.vertx.core.http.HttpHeaders;
-import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -15,12 +13,8 @@ import io.vertx.ext.jwt.JWTOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
-import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
-import io.vertx.ext.web.handler.impl.JWTAuthHandlerImpl;
 import se.maokei.jwtserver.entity.User;
-
-import java.util.HashSet;
 
 
 /**
