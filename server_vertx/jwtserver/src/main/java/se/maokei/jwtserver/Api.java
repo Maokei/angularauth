@@ -182,7 +182,7 @@ public class Api {
       "        }]";
     JsonArray events = new JsonArray(data);
     rc.response().setStatusCode(200)
-      .putHeader("content-type", "appplication/json")
+      .putHeader("content-type", "application/json")
       .end(Json.encodePrettily(events));
   }
 
