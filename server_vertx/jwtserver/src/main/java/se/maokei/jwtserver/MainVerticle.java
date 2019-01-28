@@ -91,7 +91,9 @@ public class MainVerticle extends AbstractVerticle {
       }
       httpServerResponse.putHeader("Content-Type", "application/text").end("Success");
     });*/
-    router.route().handler(CorsHandler.create("*").allowedHeaders(getAllowedHeaders()).allowedMethods(getAllowedMethods()));
+    router.route().handler(CorsHandler.create("*")
+      .allowedHeaders(getAllowedHeaders())
+      .allowedMethods(getAllowedMethods()));
 
     Api api = new Api(vertx);
     router.mountSubRouter("/api/", api.getApiSubrouter(vertx));
