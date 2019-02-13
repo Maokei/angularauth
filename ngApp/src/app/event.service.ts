@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpErrorResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -23,7 +22,11 @@ export class EventService {
   }
 
   getSpecial() {
-    return this._httpClient.get<any>(this._specialEventsUrl)
+    return this._httpClient.get<any>(this._specialEventsUrl).pipe(map(res => {
+      return res;
+    }, err => {
+      this.handleError(err);
+    }));
   }
 
   private handleError(error) {
