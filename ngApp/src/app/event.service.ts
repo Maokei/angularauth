@@ -7,7 +7,6 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class EventService {
-
   private _eventsUrl = 'http://localhost:3000/api/events';
   private _specialEventsUrl = 'http://localhost:3000/api/special';
 
