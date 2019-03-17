@@ -17,7 +17,7 @@ public class Event {
     @DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date date;
 
-    public Event(String name, String description, Date date) {
+    public Event(String name, String description, Date date){
         this.name = name;
         this.description = description;
         this.date = date;
