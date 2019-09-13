@@ -43,7 +43,12 @@ public class MongoDBVerticle extends AbstractVerticle {
   public void start() {
     LOGGER.info("Starting MongoDB verticle");
     JsonObject dbConfig = new JsonObject();
-    dbConfig.put("connection_string", "mongodb://" + config().getString("mongodb.host") + ":" + config().getInteger("mongodb.port") + "/" + config().getString("mongodb.dbname"));
+    dbConfig.put(
+      "connection_string", "mongodb://"
+      + config().getString("mongodb.host")
+      + ":" + config().getInteger("mongodb.port")
+      + "/" + config().getString("mongodb.dbname")
+    );
     //No need
     //dbConfig.put("username", config().getString("mongodb_username"));
     //dbConfig.put("password", config().getString("mongodb_password"));
