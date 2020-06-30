@@ -1,3 +1,3 @@
 # Angularauth
 
-Angular client with three different back-ends vertx, spring boot, nodejs, EE.
+Angular client with multiple different back-ends vertx, spring boot, nodejs, EE.
