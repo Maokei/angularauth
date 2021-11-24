@@ -172,7 +172,8 @@
           </executions>
           <configuration>
             <imageName>jwtserver</imageName>
-            <mainClass>se.maokei.jwtserver.MainVerticle</mainClass>
+            <!--mainClass>se.maokei.jwtserver.MainVerticle</mainClass-->
+            <mainClass>io.vertx.core.Launcher</mainClass>
             <buildArgs>
               -H:+PrintClassInitialization
               -H:+ReportExceptionStackTraces

@@ -6,7 +6,7 @@
   },
   {
     "name": "io.vertx.core.impl.launcher.commands.VertxIsolatedDeployer",
-    "allDeclaredConstjni-config.jsonructors": true,
+    "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   },
   {
@@ -19,7 +19,7 @@
   },
 
   {
-    "name": "jwtserver.MainVerticle",
+    "name": "se.maokei.jwtserver.MainVerticle",
     "allDeclaredConstructors": true,
     "allDeclaredMethods": true
   }

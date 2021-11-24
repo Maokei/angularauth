@@ -20,9 +20,20 @@ To run your application:
 ```
 ./mvnw clean compile exec:java
 ```
+== Graalvm
 native-agent
 ```
 java -agentlib:native-image-agent=config-output-dir=META-INF/native-image -jar jwtserver-1.0.0-SNAPSHOT-fat.jar
+
+mvn -Pnative -DskipTests package
+```
+With main method
+```
+./target/jwtserver
+```
+Without main method
+```
+./target/jwtserver run se.maokei.jwtserver.MainVerticle -instances 4
 ```
 
 == Help
