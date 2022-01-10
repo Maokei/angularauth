@@ -4,7 +4,6 @@ import io.vertx.core.*;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServerOptions;
-import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
@@ -96,7 +95,7 @@ public class MainVerticle extends AbstractVerticle {
       .allowedMethods(getAllowedMethods()));
 
     Api api = new Api(vertx);
-    router.mountSubRouter("/api/", api.getApiSubrouter(vertx));
+    router.mountSubRouter("/api/", api.getApiSubRouter(vertx));
 
     router.route().handler(StaticHandler.create().setCachingEnabled(false));
     vertx.createHttpServer(new HttpServerOptions().setCompressionSupported(true))

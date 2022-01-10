@@ -186,7 +186,10 @@ public class Api {
       .end(Json.encodePrettily(events));
   }
 
-  public Router getApiSubrouter(Vertx vertx) {
+  /**
+   * getApiSubRouter
+   * */
+  public Router getApiSubRouter(Vertx vertx) {
     this.vertx = vertx;
     Router apiRoute = Router.router(vertx);
     apiRoute.route("/").handler(this::defaultRoute);
