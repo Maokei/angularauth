@@ -29,7 +29,7 @@ public class MongoManager {
   public void createCollection() {
     this.mongoClient.createCollection("", res -> {
       if(res.succeeded()) {
-        //created
+        LOGGER.info("Created collection");
       }else{
         res.cause().printStackTrace();
       }
