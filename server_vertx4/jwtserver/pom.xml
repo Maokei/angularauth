@@ -16,13 +16,14 @@
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
 
-    <vertx.version>4.2.1</vertx.version>
+    <vertx.version>4.2.6</vertx.version>
     <junit-jupiter.version>5.7.0</junit-jupiter.version>
+    <micrometer.version>4.2.6</micrometer.version>
 
     <main.verticle>se.maokei.jwtserver.MainVerticle</main.verticle>
     <launcher.class>io.vertx.core.Launcher</launcher.class>
 
-    <graal.version>21.2.0</graal.version>
+    <graal.version>21.3.0</graal.version>
   </properties>
 
   <dependencyManagement>
@@ -63,6 +64,10 @@
       <artifactId>vertx-mongo-client</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web-graphql</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
@@ -72,6 +77,16 @@
       <version>1.18.22</version>
       <scope>provided</scope>
     </dependency>
+    <!--dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-micrometer-metrics</artifactId>
+      <version>4.2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+      <version>${micrometer.version}</version>
+    </dependency-->
 
 
     <dependency>

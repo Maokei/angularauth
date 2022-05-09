@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  event-grafana:
+    image: grafana/grafana:8.4.4
+    ports:
+      - "3000:3000"
+  event-prometheus:
+    image: prom/prometheus:v2.34.0
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+networks:
+  default:
+    external:
+      name: vertx-4-rest-api-network
