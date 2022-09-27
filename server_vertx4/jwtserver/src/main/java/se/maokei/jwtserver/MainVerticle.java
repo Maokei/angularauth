@@ -87,7 +87,7 @@ public static void main(String[] args) {
 
     router.route().handler(BodyHandler.create());
     router.route("/static/*").handler(StaticHandler.create());
-    router.route("/graphql").handler(graphQLHandler);
+    router.post("/graphql").handler(graphQLHandler);
     router.route("/graphiql/*").handler(GraphiQLHandler.create(options));
 
 
