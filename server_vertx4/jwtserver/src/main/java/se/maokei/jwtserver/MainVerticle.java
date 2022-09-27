@@ -55,7 +55,7 @@ public static void main(String[] args) {
     // RuntimeWiring linking our schema/TypeDefinitionRegistry to our services
     RuntimeWiring runtimeWiring = newRuntimeWiring()
       .type(newTypeWiring("Query")
-        //.dataFetcher("eventById", bookByIdDataFetcher())
+        //.dataFetcher("eventById", eventByIdDataFetcher())
         .dataFetcher("getEvents", eventsDataFetcher()))
       .build();
 
