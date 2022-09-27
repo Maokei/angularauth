@@ -55,7 +55,7 @@ public class EventRepository {
    * @param offset     Offset
    * @return List<Event>
    */
-  public Future<List<Event>> getAllBooks(int limit, int offset) {
+  public Future<List<Event>> getAllEventsLimit(int limit, int offset) {
     List<Event> result =
       events.stream()
         .skip(offset)  // Equivalent to SQL's offset
@@ -66,7 +66,7 @@ public class EventRepository {
       .onFailure(fail -> LOGGER.error("Unable to return all books"));
   }
 
-  public Future<List<Event>> getAllBooks() {
+  public Future<List<Event>> getAllEvents() {
     return Future.succeededFuture(events)
       .onSuccess(success -> LOGGER.info("All event was asked for!"))
       .onFailure(fail -> LOGGER.error("Unable to return all books"));
