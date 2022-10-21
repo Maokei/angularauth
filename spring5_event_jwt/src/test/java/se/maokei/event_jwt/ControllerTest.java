@@ -14,7 +14,6 @@ import se.maokei.event_jwt.security.JwtTokenProvider;
 import se.maokei.event_jwt.service.UserDetailsServiceImpl;
 import se.maokei.event_jwt.util.Helpers;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
