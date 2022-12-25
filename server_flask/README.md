@@ -10,6 +10,6 @@ python -m flask run --host=0.0.0.0
 ```
 Docker
 ```
-docker build -t flask-tutorial:latest .
-docker run -d -p 5000:5000 flask-tutorial
+docker build -t flask-server:latest .
+docker run -d -p 5000:5000 flask-server
 ```
